@@ -31,7 +31,7 @@ type GraphQLClient' (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o ::
 
 type GraphQLClient = forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type). GraphQLClient' operation gql i o
 
-graphQL :: Endpoint -> Array RequestHeader -> (forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type). GraphQLReqRes operation gql i o => IsSymbol gql => JSON.WriteForeign { | i } => JSON.ReadForeign { | o } => Gql operation -> Record i -> Aff { | o })
+graphQL :: Endpoint -> Array RequestHeader -> GraphQLClient
 graphQL endpoint headers = go
   where
   go :: forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type). GraphQLReqRes operation gql i o => IsSymbol gql => JSON.WriteForeign { | i } => JSON.ReadForeign { | o } => Gql operation -> Record i -> Aff { | o }
