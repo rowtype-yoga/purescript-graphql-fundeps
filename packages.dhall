@@ -99,6 +99,56 @@ in  upstream
 -------------------------------
 -}
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.14.1-20210516/packages.dhall sha256:f5e978371d4cdc4b916add9011021509c8d869f4c3f6d0d2694c0e03a85046c8
+      https://raw.githubusercontent.com/purescript/package-sets/prepare-0.15/src/packages.dhall
+        sha256:b1c6d06132b7cbf1e93b1e5343044fba1604b50bfbe02d8f80a3002e71569c59
 
 in  upstream
+  with variant =
+    { dependencies =
+      [ "enums"
+      , "lists"
+      , "maybe"
+      , "partial"
+      , "prelude"
+      , "record"
+      , "tuples"
+      , "unsafe-coerce"
+      ]
+    , repo =
+        "https://github.com/working-group-purescript-es/purescript-variant.git"
+    , version = "v0.15.0-update"
+    }
+  with simple-json =
+    { dependencies =
+      [ "arrays"
+      , "exceptions"
+      , "foreign-object"
+      , "foreign"
+      , "nullable"
+      , "prelude"
+      , "record"
+      , "typelevel-prelude"
+      , "variant"
+      ]
+    , repo =
+        "https://github.com/working-group-purescript-es/purescript-simple-json.git"
+    , version = "v0.15.0-update"
+    }
+  with spec =
+    { repo = "https://github.com/purescript-spec/purescript-spec.git"
+    , version = "master"
+    , dependencies =
+      [ "aff"
+      , "ansi"
+      , "avar"
+      , "console"
+      , "exceptions"
+      , "foldable-traversable"
+      , "fork"
+      , "now"
+      , "pipes"
+      , "prelude"
+      , "strings"
+      , "transformers"
+      ]
+    }
