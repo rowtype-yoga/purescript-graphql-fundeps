@@ -17,13 +17,16 @@ to generate this file without the comments in this block.
   , "console"
   , "effect"
   , "either"
+  , "foreign"
   , "http-methods"
+  , "lists"
   , "maybe"
   , "media-types"
   , "prelude"
   , "psci-support"
   , "simple-json"
   , "strings"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]

@@ -50,7 +50,7 @@ type ParsingErrorInfo =
   , jsonParsingError :: NonEmptyList ForeignError
   }
 
-type GraphQLClient'
+type GraphQLClient''
   (operation :: GraphQL)
   (gql :: Symbol)
   (i :: Row Type)
@@ -72,7 +72,27 @@ type GraphQLClient'
 type GraphQLClient =
   forall (operation :: GraphQL)
     (gql :: Symbol) (i :: Row Type) (o :: Row Type) (m :: Type -> Type) (e :: Type)
-   . GraphQLClient' operation gql i o m e
+   . GraphQLReqRes operation gql i o
+  => IsSymbol gql
+  => JSON.WriteForeign { | i }
+  => JSON.ReadForeign { | o }
+  => MonadAff m
+  => MonadThrow e m
+  => (NetworkErrorInfo -> e)
+  -> (ParsingErrorInfo -> e)
+  -> Gql operation
+  -> Record i
+  -> m { | o }
+
+type GraphQLClientAff =
+  forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type)
+   . GraphQLReqRes operation gql i o
+  => IsSymbol gql
+  => JSON.WriteForeign { | i }
+  => JSON.ReadForeign { | o }
+  => Gql operation
+  -> Record i
+  -> Aff { | o }
 
 graphQL
   :: Endpoint
