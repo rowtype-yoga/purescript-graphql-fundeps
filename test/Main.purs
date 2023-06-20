@@ -2,14 +2,13 @@ module Test.Main where
 
 import Prelude
 
-import Affjax (AffjaxDriver)
 import Affjax.Node as AffjaxNode
 import Data.Foldable (for_)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (Milliseconds(..), launchAff_)
 import Effect.Class.Console as Log
-import GraphQL.FunDeps (class GraphQLReqRes, Gql(..), GraphQL, GraphQLClient, graphQL)
+import GraphQL.FunDeps (class GraphQLReqRes, Gql(..), GraphQL, GraphQLClientAff, graphQL)
 import Test.Spec (describe, it)
 import Test.Spec.Reporter.Console (consoleReporter)
 import Test.Spec.Runner (defaultConfig, runSpec')
@@ -51,7 +50,7 @@ instance graphqlReactFinlandConference ::
         }
     )
 
-client :: GraphQLClient
+client :: GraphQLClientAff
 client = graphQL "https://api.react-finland.fi/graphql" [] AffjaxNode.driver
 
 main ∷ Effect Unit
