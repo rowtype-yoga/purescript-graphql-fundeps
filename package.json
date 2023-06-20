@@ -1,6 +1,6 @@
 {
   "name": "purescript-graphql-fundeps",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "postinstall": "spago install && spago build",
     "test": "spago -x test.dhall test"
@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "purescript": "^0.14.1",
-    "spago": "^0.20.3",
+    "purescript": "^0.15.9",
+    "purs-tidy": "^0.10.0",
+    "spago": "^0.21.0",
     "xhr2": "^0.2.1"
   }
 }

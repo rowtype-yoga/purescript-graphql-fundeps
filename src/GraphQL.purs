@@ -2,6 +2,7 @@ module GraphQL.FunDeps where
 
 import Prelude
 
+import Affjax (AffjaxDriver)
 import Affjax as AX
 import Affjax.RequestBody as RequestBody
 import Affjax.RequestHeader (RequestHeader(..))
@@ -31,8 +32,8 @@ type GraphQLClient' (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o ::
 
 type GraphQLClient = forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type). GraphQLClient' operation gql i o
 
-graphQL :: Endpoint -> Array RequestHeader -> GraphQLClient
-graphQL endpoint headers = go
+graphQL :: Endpoint -> Array RequestHeader -> AffjaxDriver -> GraphQLClient
+graphQL endpoint headers driver = go
   where
   go :: forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type). GraphQLReqRes operation gql i o => IsSymbol gql => JSON.WriteForeign { | i } => JSON.ReadForeign { | o } => Gql operation -> Record i -> Aff { | o }
   go _ variables = do
@@ -42,7 +43,7 @@ graphQL endpoint headers = go
         , query: String.replaceAll (String.Pattern "\n") (String.Replacement " ") (String.replaceAll (String.Pattern "\r\n") (String.Replacement " ") (reflectSymbol (Proxy :: Proxy gql)))
         }
     res <-
-      AX.request
+      AX.request driver
         ( AX.defaultRequest
             { url = endpoint
             , method = Left POST
