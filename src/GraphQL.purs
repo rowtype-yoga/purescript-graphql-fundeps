@@ -2,6 +2,7 @@ module GraphQL.FunDeps where
 
 import Prelude
 
+import Affjax (AffjaxDriver)
 import Affjax as AX
 import Affjax.RequestBody as RequestBody
 import Affjax.RequestHeader (RequestHeader(..))
@@ -97,6 +98,7 @@ type GraphQLClientAff =
 graphQL
   :: Endpoint
   -> Array RequestHeader
+  -> AffjaxDriver
   -> ( forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type)
         . GraphQLReqRes operation gql i o
        => IsSymbol gql
@@ -106,14 +108,16 @@ graphQL
        -> Record i
        -> Aff { | o }
      )
-graphQL endpoint headers = graphQL'
+graphQL endpoint headers driver = graphQL'
   endpoint
   headers
+  driver
   (error <<< AX.printError <<< _.error)
   (error <<< _.body <<< _.response)
 
-graphQL' :: Endpoint -> Array RequestHeader -> GraphQLClient
-graphQL' endpoint headers' = go
+
+graphQL' :: Endpoint -> Array RequestHeader -> AffjaxDriver -> GraphQLClient
+graphQL' endpoint headers' driver = go
   where
   requestHeaders = headers' <> [ ContentType $ MediaType "application/json" ]
 
@@ -146,7 +150,7 @@ graphQL' endpoint headers' = go
         }
       requestBody = JSON.writeJSON input
     res <-
-      liftAff $ AX.request
+      liftAff $ AX.request driver
         ( AX.defaultRequest
             { url = endpoint
             , method = Left POST

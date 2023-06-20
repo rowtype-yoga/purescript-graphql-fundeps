@@ -3,7 +3,7 @@
 Type-safe graphql queries using functional dependencies.
 
 Use the `GraphQLReqRes` class to define expected input and output.
-Then, create a `client` and use it to interact with your API. 
+Then, create a `client` and use it to interact with your API.
 
 ```purescript
 endpoint = "https://api.react-finland.fi/graphql" :: String
@@ -44,7 +44,7 @@ instance graphqlReactFinlandConference ::
     )
 
 client :: GraphQLClient
-client = graphQL "https://api.react-finland.fi/graphql" []
+client = graphQL "https://api.react-finland.fi/graphql" [] driver
 
 main ∷ Effect Unit
 main =

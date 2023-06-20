@@ -2,6 +2,7 @@ module Test.Main where
 
 import Prelude
 
+import Affjax.Node as AffjaxNode
 import Data.Foldable (for_)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
@@ -50,7 +51,7 @@ instance graphqlReactFinlandConference ::
     )
 
 client :: GraphQLClientAff
-client = graphQL "https://api.react-finland.fi/graphql" []
+client = graphQL "https://api.react-finland.fi/graphql" [] AffjaxNode.driver
 
 main ∷ Effect Unit
 main =
