@@ -99,15 +99,7 @@ graphQL
   :: Endpoint
   -> Array RequestHeader
   -> AffjaxDriver
-  -> ( forall (operation :: GraphQL) (gql :: Symbol) (i :: Row Type) (o :: Row Type)
-        . GraphQLReqRes operation gql i o
-       => IsSymbol gql
-       => JSON.WriteForeign { | i }
-       => JSON.ReadForeign { | o }
-       => Gql operation
-       -> Record i
-       -> Aff { | o }
-     )
+  -> GraphQLClientAff
 graphQL endpoint headers driver = graphQL'
   endpoint
   headers
