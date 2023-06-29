@@ -1,3 +1,7 @@
 .spago/
 output/
 node_modules/
+.psci_modules
+
+# Nix
+.direnv/

@@ -43,7 +43,7 @@ instance graphqlReactFinlandConference ::
         }
     )
 
-client :: GraphQLClient
+client :: GraphQLClientAff
 client = graphQL "https://api.react-finland.fi/graphql" [] driver
 
 main ∷ Effect Unit
@@ -57,3 +57,40 @@ main =
 ```
 
 You can check out the [test](./test/Main.purs) for a full example.
+
+## Development
+
+You can either use the nix shell, or the npm package.
+
+### Nix shell
+
+Having set up [flakes](https://nixos.wiki/wiki/Flakes), either using [direnv](https://direnv.net/) (`direnv allow`) or `nix develop`
+
+Buliding:
+
+```
+spago build
+```
+
+Testing:
+
+```
+spago -x test.dhall test
+```
+
+
+### Npm
+
+Just run `npm i` and then:
+
+Building:
+
+```
+spago build
+```
+
+Testing:
+
+```
+npm run test
+```
